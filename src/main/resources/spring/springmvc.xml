@@ -14,14 +14,19 @@
     http://code.alibabatech.com/schema/dubbo
     http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
 
-	<context:component-scan base-package="com.huarui.manager.action" />
+	<context:property-placeholder location="classpath:conf/resource.properties"></context:property-placeholder>
+	<!--<bean id="fastDFSClient" class="com.huarui.common.utils.FastDFSClient">
+		<constructor-arg index="0" value="classpath:conf/client.conf"/>
+	</bean>-->
+	<context:component-scan base-package="com.huarui.manager" />
 	<mvc:annotation-driven />
 	<bean
 		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
 		<property name="prefix" value="/WEB-INF/jsp/" />
 		<property name="suffix" value=".jsp" />
 	</bean>
-	
+
+	<mvc:view-controller path="/" view-name="index"/>
 	<mvc:default-servlet-handler></mvc:default-servlet-handler>
 	<!-- 定义文件上传解析器 -->
 	<bean id="multipartResolver"
@@ -36,5 +41,5 @@
 	<dubbo:application name="hrsc-manager-web"/>
 	<dubbo:registry protocol="zookeeper" address="192.168.25.129:2181"/>	
 	<dubbo:reference interface="com.huarui.manager.service.TbItemService" id="itemService" />
-
+	<dubbo:reference interface="com.huarui.manager.service.ItemCatService" id="itemCatService" />
 </beans>
